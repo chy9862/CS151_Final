@@ -7,15 +7,15 @@ import java.util.Scanner;
 import static starbucks.menu.products;
 
 
-    public class Application {
-        Scanner scanner = new Scanner(System.in);
-        public menu m;
-        public order o = new order();
+public class Application {
+    Scanner scanner = new Scanner(System.in);
+    public menu m;
+    public order o = new order();
 
 
-        public payment p;
+    public payment p;
 
-        String filepath;
+    String filepath;
     public Application (String filepath) { // constructor
         this.filepath = filepath;
         m = new menu(filepath);
@@ -76,27 +76,31 @@ import static starbucks.menu.products;
         }
         //quit the app in main menu
         else{
-            m.update(filepath); //update the products
+            //m.update(filepath); //update the products
             System.out.println("quit the app!");
             System.exit(0); //quit all process
         }
     }
 
+
+
     public HashMap<Integer, String> orderlist(){
-            int listNum = 1;
-            HashMap<Integer, String> numWithOrder = new HashMap<>();
+        int listNum = 1;
+        HashMap<Integer, String> numWithOrder = new HashMap<>();
 
-            for (Map.Entry<String, ArrayList<String>> order : o.orderList.entrySet()) {
-                String Order = order.getKey();
-                String Name = Order.substring(0, Order.length() - 1);
-                String Size = Order.substring(Order.length() - 1);
+        for (Map.Entry<String, ArrayList<String>> order : o.orderList.entrySet()) {
+            String Order = order.getKey();
+            String Name = Order.substring(0, Order.length() - 1);
+            String Size = Order.substring(Order.length() - 1);
 
-                for(Product p : products){
+            for(Product p : products){
 
-                    if(p.getName().equals(Name) && Size.equals("s")){
-                        System.out.println(listNum+". " + Name + " SHORT " + " x " + order.getValue().get(0));
+                if(p.getName().equals(Name) && Size.equals("s") && p instanceof Drink){
+                    System.out.println(listNum+". " + Name + " SHORT " + " x " + order.getValue().get(0));
 
-                        if(order.getValue().size() >=2){
+
+                    if(order.getValue().size() >=2){
+                        if(!order.getValue().get(1).equals("")){
                             for(int i =1 ; i < order.getValue().size() ; i++){
 
                                 String customizeQuantity = order.getValue().get(i).substring(order.getValue().get(i).length() - 1);
@@ -119,102 +123,114 @@ import static starbucks.menu.products;
 
                             }
                         }
-
-                        numWithOrder.put(listNum,Order);
-                        listNum++;
-                    }else if(p.getName().equals(Name) && Size.equals("t")){
-                        System.out.println(listNum+". "+Name + " TALL " + " x " + order.getValue().get(0));
-
-                        if(order.getValue().size() >=2){
-                            for(int i =1 ; i < order.getValue().size() ; i++){
-
-                                String customizeQuantity = order.getValue().get(i).substring(order.getValue().get(i).length() - 1);
-                                try {
-                                    int value = Integer.parseInt(customizeQuantity);
-                                    String customizeMenuName = order.getValue().get(i).substring(0,order.getValue().get(i).length() - 1);
-
-                                    //index 1 => espresso shots
-                                    if(i==1){
-                                        System.out.println("  " + customizeMenuName + " x " + customizeQuantity + " Shots");
-                                    }else {
-                                        System.out.println("  " + customizeMenuName + " x " + customizeQuantity);
-                                    }
-
-                                } catch (NumberFormatException e) {
-                                    System.out.println("  " + order.getValue().get(i));
-                                }
-
-                            }
-                        }
-
-                        numWithOrder.put(listNum,Order);
-                        listNum++;
-                    }else if(p.getName().equals(Name) && Size.equals("g")){
-                        System.out.println(listNum+". "+Name + " GRANDE " + " x " + order.getValue().get(0));
-
-                        if(order.getValue().size() >=2){
-                            for(int i =1 ; i < order.getValue().size() ; i++){
-
-                                String customizeQuantity = order.getValue().get(i).substring(order.getValue().get(i).length() - 1);
-                                try {
-                                    int value = Integer.parseInt(customizeQuantity);
-                                    String customizeMenuName = order.getValue().get(i).substring(0,order.getValue().get(i).length() - 1);
-
-                                    //index 1 => espresso shots
-                                    if(i==1){
-                                        System.out.println("  " + customizeMenuName + " x " + customizeQuantity + " Shots");
-                                    }else {
-                                        System.out.println("  " + customizeMenuName + " x " + customizeQuantity);
-                                    }
-
-                                } catch (NumberFormatException e) {
-                                    System.out.println("  " + order.getValue().get(i));
-                                }
-
-                            }
-                        }
-                        numWithOrder.put(listNum,Order);
-                        listNum++;
-                    }else if(p.getName().equals(Name) && Size.equals("v")){
-                        System.out.println(listNum+". "+ Name + " VENTI " + " x " + order.getValue().get(0));
-
-                        if(order.getValue().size() >=2){
-                            for(int i =1 ; i < order.getValue().size() ; i++){
-
-                                String customizeQuantity = order.getValue().get(i).substring(order.getValue().get(i).length() - 1);
-                                try {
-                                    int value = Integer.parseInt(customizeQuantity);
-                                    String customizeMenuName = order.getValue().get(i).substring(0,order.getValue().get(i).length() - 1);
-
-                                    //index 1 => espresso shots
-                                    if(i==1){
-                                        System.out.println("  " + customizeMenuName + " x " + customizeQuantity + " Shots");
-                                    }else {
-                                        System.out.println("  " + customizeMenuName + " x " + customizeQuantity);
-                                    }
-
-                                } catch (NumberFormatException e) {
-                                    System.out.println("  " + order.getValue().get(i));
-                                }
-
-                            }
-                        }
-
-                        numWithOrder.put(listNum,Order);
-                        listNum++;
                     }
 
-//                    else{
-//                        System.out.println(listNum+". " + Order + " x" + order.getValue());
-//                        numWithOrder.put(listNum,Order);
-//                        listNum++;
-//                    }
+                    numWithOrder.put(listNum,Order);
+                    listNum++;
+                }
 
+                else if(p.getName().equals(Name) && Size.equals("t") && p instanceof Drink){
+                    System.out.println(listNum+". "+Name + " TALL " + " x " + order.getValue().get(0));
+
+                    if(order.getValue().size() >=2){
+                        for(int i =1 ; i < order.getValue().size() ; i++){
+
+                            String customizeQuantity = order.getValue().get(i).substring(order.getValue().get(i).length() - 1);
+                            try {
+                                int value = Integer.parseInt(customizeQuantity);
+                                String customizeMenuName = order.getValue().get(i).substring(0,order.getValue().get(i).length() - 1);
+
+                                //index 1 => espresso shots
+                                if(i==1){
+                                    System.out.println("  " + customizeMenuName + " x " + customizeQuantity + " Shots");
+                                }else {
+                                    System.out.println("  " + customizeMenuName + " x " + customizeQuantity);
+                                }
+
+                            } catch (NumberFormatException e) {
+                                System.out.println("  " + order.getValue().get(i));
+                            }
+
+                        }
+                    }
+
+                    numWithOrder.put(listNum,Order);
+                    listNum++;
+                }
+
+                else if(p.getName().equals(Name) && Size.equals("g") && p instanceof Drink){
+                    System.out.println(listNum+". "+Name + " GRANDE " + " x " + order.getValue().get(0));
+
+                    if(order.getValue().size() >=2){
+                        for(int i =1 ; i < order.getValue().size() ; i++){
+
+                            String customizeQuantity = order.getValue().get(i).substring(order.getValue().get(i).length() - 1);
+                            try {
+                                int value = Integer.parseInt(customizeQuantity);
+                                String customizeMenuName = order.getValue().get(i).substring(0,order.getValue().get(i).length() - 1);
+
+                                //index 1 => espresso shots
+                                if(i==1){
+                                    System.out.println("  " + customizeMenuName + " x " + customizeQuantity + " Shots");
+                                }else {
+                                    System.out.println("  " + customizeMenuName + " x " + customizeQuantity);
+                                }
+
+                            } catch (NumberFormatException e) {
+                                System.out.println("  " + order.getValue().get(i));
+                            }
+
+                        }
+                    }
+                    numWithOrder.put(listNum,Order);
+                    listNum++;
+                }
+
+                else if(p.getName().equals(Name) && Size.equals("v") && p instanceof Drink){
+                    System.out.println(listNum+". "+ Name + " VENTI " + " x " + order.getValue().get(0));
+
+                    if(order.getValue().size() >=2){
+                        for(int i =1 ; i < order.getValue().size() ; i++){
+
+                            String customizeQuantity = order.getValue().get(i).substring(order.getValue().get(i).length() - 1);
+                            try {
+                                int value = Integer.parseInt(customizeQuantity);
+                                String customizeMenuName = order.getValue().get(i).substring(0,order.getValue().get(i).length() - 1);
+
+                                //index 1 => espresso shots
+                                if(i==1){
+                                    System.out.println("  " + customizeMenuName + " x " + customizeQuantity + " Shots");
+                                }else {
+                                    System.out.println("  " + customizeMenuName + " x " + customizeQuantity);
+                                }
+
+                            } catch (NumberFormatException e) {
+                                System.out.println("  " + order.getValue().get(i));
+                            }
+
+                        }
+                    }
+
+                    numWithOrder.put(listNum,Order);
+                    listNum++;
+                }
+
+                else if (p.getName().equals(Order) && p instanceof Food){
+                    System.out.println(listNum+". " + Order + " x" + order.getValue().get(0));
+                    numWithOrder.put(listNum,Order);
+                    listNum++;
+                }
+                else if (p.getName().equals(Order) && p instanceof Merchandise){
+                    System.out.println(listNum+". " + Order + " x" + order.getValue().get(0));
+                    numWithOrder.put(listNum,Order);
+                    listNum++;
                 }
 
             }
 
-            return numWithOrder;
+        }
+
+        return numWithOrder;
 
     }
 
@@ -224,236 +240,236 @@ import static starbucks.menu.products;
         int Integerquantity =0;
         int listNum =1;
         HashMap<Integer,Product> menuWithListnumber = new HashMap<>();
+        do {
+            System.out.println("Choose the option to update (choose number)");
+            System.out.println("1. Add the Menu");
+            System.out.println("2. Remove");
+            System.out.println("3. Update Quantity");
+            System.out.println("4. Check the Quantity");
+            System.out.println("5. Back to main");
+            int chooseUpdate = scanner.nextInt();
+            //add the new menu
+            if (chooseUpdate == 1) {
+                boolean pass;
+                System.out.println("Select the type of product to add (choose number)");
+                System.out.println("1. Drink");
+                System.out.println("2. Food");
+                System.out.println("3. Merchandise");
+                System.out.println("4. back to update menu");
+                int choosetype = scanner.nextInt();
+
+                if(choosetype == 4){
+                    passUpdate = false;
+                }
+                else{
+                    System.out.println("Type menu name: ");
+                    String name = scanner.next();
+
+                    do {
+
+                        System.out.println("Type the price(USD) : ");
+                        String price = scanner.next();
+                        try {
+                            doubleprice = Double.parseDouble(price);
+                            pass = true;
+
+                        }
+                        catch (NumberFormatException e) {
+                            pass = false;
+                            System.out.println("Invalid input. Please enter a valid double value.(i.e 5.0)");
+                        }
+
+                    }while(!pass);
+
+
+                    do {
+
+                        System.out.println("Type the quantity : ");
+                        String quantity = scanner.next();
+                        try {
+                            Integerquantity = Integer.parseInt(quantity);
+                            pass = true;
+
+                        }
+                        catch (NumberFormatException e) {
+                            pass = false;
+                            System.out.println("Invalid input. Please enter a valid double value.(i.e 12)");
+                        }
+
+                    }while(!pass);
+
+                    //add for Drink
+                    if(choosetype==1){
+
+                        Product newMenu = new Drink(name,Integerquantity,doubleprice);
+                        products.add(newMenu);
+                        m.update(filepath);
+                        System.out.println("Successfully add the product!");
+
+                    }
+                    //add for Food
+                    else if(choosetype == 2){
+                        Product newMenu = new Food(name,Integerquantity,doubleprice);
+                        products.add(newMenu);
+                        m.update(filepath);
+                        System.out.println("Successfully add the product!");
+                    }
+                    //add for merchandise
+                    else{
+                        Product newMenu = new Merchandise(name,Integerquantity,doubleprice);
+                        products.add(newMenu);
+                        m.update(filepath);
+                        System.out.println("Successfully add the product!");
+                    }
+                }//end of else
+            }
+
+            //remove the menu
+            else if (chooseUpdate == 2) {
+                System.out.println("Choose option or the product to remove (choose number)");
+                for(Product p :  products){
+
+                    System.out.println(listNum +". "+ p.getName() + " $"+p.getPrice());
+                    menuWithListnumber.put(listNum,p);
+                    listNum++;
+
+                }
+                System.out.println(listNum +". Back to Update menu");
+                int chooseMenuToRemove = scanner.nextInt();
+
+                if(chooseMenuToRemove == listNum){
+                    passUpdate = false;
+                }
+                else {
+                    String menuName = menuWithListnumber.get(chooseMenuToRemove).getName();
+
+                    for (Product p : products) { //remove the product in products list
+                        if (menuName.equals(p.getName())) {
+                            products.remove(p);
+                            break;
+                        }
+                    }
+                    m.update(filepath);
+                    System.out.println("Successfully update the menu!");
+                    startApp();
+                }
+
+            }
+
+            //update the quantity
+            else if (chooseUpdate == 3) {
+                System.out.println("Choose the product to update the quantity or option (choose number)");
+                for(Product p :  products){
+
+                    System.out.println(listNum +". "+ p.getName() + " x "+p.getQuantity());
+                    menuWithListnumber.put(listNum,p);
+                    listNum++;
+
+                }
+                System.out.println(listNum + ". go back to update menu");
+                int chooseMenuToUpdateQuantity = scanner.nextInt();
+
+                if(chooseMenuToUpdateQuantity == listNum){
+                    passUpdate =false;
+                }else {
+
+                    String menuName = menuWithListnumber.get(chooseMenuToUpdateQuantity).getName();
+
+                    //Update the product quantity in products list
+                    for (Product p : products) {
+                        if (menuName.equals(p.getName())) {
+                            System.out.printf("Type the quantity : ");
+                            int quantity = scanner.nextInt();
+                            p.setQuantity(quantity);
+                            break;
+                        }
+                    }
+
+                    m.update(filepath);
+                    System.out.println("Successfully update the menu!");
+                    startApp();
+
+                }
+            }
+
+            //Check the quantity
+            else if (chooseUpdate == 4){
+
+                boolean goCheckQuantityMenu = false;
+
                 do {
-                    System.out.println("Choose the option to update (choose number)");
-                    System.out.println("1. Add the Menu");
-                    System.out.println("2. Remove");
-                    System.out.println("3. Update Quantity");
-                    System.out.println("4. Check the Quantity");
-                    System.out.println("5. Back to main");
-                    int chooseUpdate = scanner.nextInt();
-                    //add the new menu
-                    if (chooseUpdate == 1) {
-                        boolean pass;
-                        System.out.println("Select the type of product to add (choose number)");
-                        System.out.println("1. Drink");
-                        System.out.println("2. Food");
-                        System.out.println("3. Merchandise");
-                        System.out.println("4. back to update menu");
-                        int choosetype = scanner.nextInt();
 
-                        if(choosetype == 4){
-                            passUpdate = false;
-                        }
-                        else{
-                        System.out.println("Type menu name: ");
-                        String name = scanner.next();
+                    System.out.println("Select the type of product to check the quantity");
+                    System.out.println("1. Drink");
+                    System.out.println("2. Food");
+                    System.out.println("3. Merchandise");
+                    System.out.println("4. Back to update menu");
 
-                        do {
+                    int choosetype = scanner.nextInt();
 
-                            System.out.println("Type the price(USD) : ");
-                            String price = scanner.next();
-                            try {
-                                doubleprice = Double.parseDouble(price);
-                                pass = true;
-
-                            }
-                            catch (NumberFormatException e) {
-                                pass = false;
-                                System.out.println("Invalid input. Please enter a valid double value.(i.e 5.0)");
-                            }
-
-                        }while(!pass);
-
-
-                        do {
-
-                            System.out.println("Type the quantity : ");
-                            String quantity = scanner.next();
-                            try {
-                                Integerquantity = Integer.parseInt(quantity);
-                                pass = true;
-
-                            }
-                            catch (NumberFormatException e) {
-                                pass = false;
-                                System.out.println("Invalid input. Please enter a valid double value.(i.e 12)");
-                            }
-
-                        }while(!pass);
-
-                        //add for Drink
-                        if(choosetype==1){
-
-                            Product newMenu = new Drink(name,Integerquantity,doubleprice);
-                            products.add(newMenu);
-                            m.update(filepath);
-                            System.out.println("Successfully add the product!");
-
-                        }
-                        //add for Food
-                        else if(choosetype == 2){
-                            Product newMenu = new Food(name,Integerquantity,doubleprice);
-                            products.add(newMenu);
-                            m.update(filepath);
-                            System.out.println("Successfully add the product!");
-                        }
-                        //add for merchandise
-                        else{
-                            Product newMenu = new Merchandise(name,Integerquantity,doubleprice);
-                            products.add(newMenu);
-                            m.update(filepath);
-                            System.out.println("Successfully add the product!");
-                        }
-                        }//end of else
-                    }
-
-                    //remove the menu
-                    else if (chooseUpdate == 2) {
-                        System.out.println("Choose option or the product to remove (choose number)");
-                        for(Product p :  products){
-
-                            System.out.println(listNum +". "+ p.getName() + " $"+p.getPrice());
-                            menuWithListnumber.put(listNum,p);
-                            listNum++;
-
-                        }
-                        System.out.println(listNum +". Back to Update menu");
-                        int chooseMenuToRemove = scanner.nextInt();
-
-                        if(chooseMenuToRemove == listNum){
-                            passUpdate = false;
-                        }
-                        else {
-                            String menuName = menuWithListnumber.get(chooseMenuToRemove).getName();
-
-                            for (Product p : products) { //remove the product in products list
-                                if (menuName.equals(p.getName())) {
-                                    products.remove(p);
-                                    break;
-                                }
-                            }
-                            m.update(filepath);
-                            System.out.println("Successfully update the menu!");
-                            startApp();
-                        }
-
-                    }
-
-                    //update the quantity
-                    else if (chooseUpdate == 3) {
-                        System.out.println("Choose the product to update the quantity or option (choose number)");
-                        for(Product p :  products){
-
-                            System.out.println(listNum +". "+ p.getName() + " x "+p.getQuantity());
-                            menuWithListnumber.put(listNum,p);
-                            listNum++;
-
-                        }
-                        System.out.println(listNum + ". go back to update menu");
-                        int chooseMenuToUpdateQuantity = scanner.nextInt();
-
-                        if(chooseMenuToUpdateQuantity == listNum){
-                            passUpdate =false;
-                        }else {
-
-                            String menuName = menuWithListnumber.get(chooseMenuToUpdateQuantity).getName();
-
-                            //Update the product quantity in products list
-                            for (Product p : products) {
-                                if (menuName.equals(p.getName())) {
-                                    System.out.printf("Type the quantity : ");
-                                    int quantity = scanner.nextInt();
-                                    p.setQuantity(quantity);
-                                    break;
-                                }
-                            }
-
-                            m.update(filepath);
-                            System.out.println("Successfully update the menu!");
-                            startApp();
-
-                        }
-                    }
-
-                    //Check the quantity
-                    else if (chooseUpdate == 4){
-
-                        boolean goCheckQuantityMenu = false;
-
-                        do {
-
-                            System.out.println("Select the type of product to check the quantity");
-                            System.out.println("1. Drink");
-                            System.out.println("2. Food");
-                            System.out.println("3. Merchandise");
-                            System.out.println("4. Back to update menu");
-
-                            int choosetype = scanner.nextInt();
-
-                            if (choosetype == 4) {
-                                goCheckQuantityMenu = false;
-                                passUpdate = false;
-                            }
-                            else { // choose other options (1,2,3)
-
-                                if (choosetype == 1) {
-                                    for (Product p : products) {
-                                        if (p instanceof Drink) {
-                                            System.out.println(p.getName() + "\n Quantity :  " + p.getQuantity());
-                                        }
-                                    }
-                                    System.out.println("Back to menu" );
-
-                                        goCheckQuantityMenu = true;
-
-                                }
-
-                                else if (choosetype == 2) {
-                                    for (Product p : products) {
-                                        if (p instanceof Food) {
-                                            System.out.println(p.getName() + "\n Quantity :  " + p.getQuantity());
-                                        }
-                                    }
-
-                                    System.out.println("Back to menu" );
-
-                                    goCheckQuantityMenu = true;
-                                }
-
-                                else if (choosetype == 3) {
-                                    for (Product p : products) {
-                                        if (p instanceof Merchandise) {
-                                            System.out.println(p.getName() + "\n Quantity :  " + p.getQuantity());
-                                        }
-                                    }
-
-                                    System.out.println("Back to menu" );
-
-                                    goCheckQuantityMenu = true;
-                                }
-
-                            }
-
-
-                        }while(goCheckQuantityMenu);
-
-
-
-                    }
-
-                    //back to the main menu
-                    else if(chooseUpdate ==5){
-                       startApp();
-                    }
-
-                    // select the wrong update
-                    else {
-                        System.out.println("Select the Wrong Option\n" + "Select again");
+                    if (choosetype == 4) {
+                        goCheckQuantityMenu = false;
                         passUpdate = false;
                     }
+                    else { // choose other options (1,2,3)
 
-                } while(!passUpdate);
+                        if (choosetype == 1) {
+                            for (Product p : products) {
+                                if (p instanceof Drink) {
+                                    System.out.println(p.getName() + "\n Quantity :  " + p.getQuantity());
+                                }
+                            }
+                            System.out.println("Back to menu" );
+
+                            goCheckQuantityMenu = true;
+
+                        }
+
+                        else if (choosetype == 2) {
+                            for (Product p : products) {
+                                if (p instanceof Food) {
+                                    System.out.println(p.getName() + "\n Quantity :  " + p.getQuantity());
+                                }
+                            }
+
+                            System.out.println("Back to menu" );
+
+                            goCheckQuantityMenu = true;
+                        }
+
+                        else if (choosetype == 3) {
+                            for (Product p : products) {
+                                if (p instanceof Merchandise) {
+                                    System.out.println(p.getName() + "\n Quantity :  " + p.getQuantity());
+                                }
+                            }
+
+                            System.out.println("Back to menu" );
+
+                            goCheckQuantityMenu = true;
+                        }
+
+                    }
+
+
+                }while(goCheckQuantityMenu);
+
+
+
+            }
+
+            //back to the main menu
+            else if(chooseUpdate ==5){
+                startApp();
+            }
+
+            // select the wrong update
+            else {
+                System.out.println("Select the Wrong Option\n" + "Select again");
+                passUpdate = false;
+            }
+
+        } while(!passUpdate);
 
     }
 
@@ -471,7 +487,7 @@ import static starbucks.menu.products;
         System.out.println("1. Drink");
         System.out.println("2. Food");
         System.out.println("3. Merchandise");
-        System.out.println("4. Remove the item from the list");
+        System.out.println("4. Edit Quantity the item from the Order list");
         System.out.println("5. Go back to main menu");
         int chooseNum = scanner.nextInt();
 
@@ -596,10 +612,10 @@ import static starbucks.menu.products;
                     else if(customized.equals("n")){
                         escapeCustomize = false; //pass the do while loop without customizing
                     }
-                  else{
+                    else{
                         System.out.println("Invalid type");
                         escapeCustomize = true;
-                  }
+                    }
 
                 }while(escapeCustomize);
 
@@ -624,7 +640,7 @@ import static starbucks.menu.products;
                 }
 
                 while(SelectAgain); // if the chosen quantity greater than quantity in stock
-                                    // choose it again
+                // choose it again
 
                 // update the quantity
                 int updateTheQuantity =  menuWithListnumber.get(chooseproduct).getQuantity();
@@ -689,18 +705,45 @@ import static starbucks.menu.products;
             case 2:
                 SelectAgain = false;
                 System.out.println("Choose your Food with the number");
-                listNum = 1;
+                listNum = 0;
                 menuWithListnumber = new HashMap<>();
                 System.out.println("Choose The number");
                 for(Product p :  products){
-                    if(p instanceof Food){
+                    if (p instanceof Food) {
 
-                        System.out.println(listNum + p.getName() + " $"+p.getPrice());
-                        menuWithListnumber.put(listNum,p);
-                        listNum++;
+                        if (p.getQuantity() == 0) {// when the quantity is 0.
+                            ++listNum;
+                            System.out.println(listNum + ". " + p.getName() + " $" + p.getPrice() + "-> Out Of Stock");
+                            menuWithListnumber.put(listNum, p);
+
+                        } else {
+                            ++listNum;
+                            System.out.println(listNum + ". " + p.getName() + " $" + p.getPrice());
+                            menuWithListnumber.put(listNum, p);
+                            quantityForstock += p.getQuantity();
+                        }
                     }
                 }
+                //display option for 'back to menu'
+                System.out.println(listNum + 1 + "." + " Back to menu");
+
+                //if there is no food
+                if (listNum == 0) {
+                    System.out.println("No available food currently");
+                    chooseMenu(); // go back to order menu
+
+                    // all menu out of stock
+                } else if (quantityForstock == 0) {
+                    System.out.println("All food is out of stock");
+                    chooseMenu(); // go back to order menu
+                }
+
                 chooseproduct = scanner.nextInt();
+
+                //go back to menu
+                if (chooseproduct == listNum + 1) {
+                    chooseMenu();
+                }
 
 
                 do{
@@ -714,30 +757,64 @@ import static starbucks.menu.products;
                     }
                 }
                 while(SelectAgain); // if the chosen quantity greater than quantity in stock
-                                    // choose it again
+                // choose it again
 
                 // update the quantity
                 updateTheQuantity =  menuWithListnumber.get(chooseproduct).getQuantity();
                 menuWithListnumber.get(chooseproduct).setQuantity(updateTheQuantity-1);
                 o.addOrder(menuWithListnumber.get(chooseproduct),chooseQuantity);
+
+
+                System.out.printf("\nThe order summary :\n");
+                orderlist();
                 System.out.printf("\nThe total price : $%.2f\n", o.calculateTotalPrice());
                 break;
 
+            //Merchandise
             case 3:
                 SelectAgain = false;
                 System.out.println("Choose your Merchandise with the number");
-                listNum = 1;
+                listNum = 0;
                 menuWithListnumber = new HashMap<>();
                 System.out.println("Choose The number");
                 for(Product p :  products){
                     if(p instanceof Merchandise){
 
-                        System.out.println(listNum + p.getName() + " $"+p.getPrice());
-                        menuWithListnumber.put(listNum,p);
-                        listNum++;
+                        if (p.getQuantity() == 0) {// when the quantity is 0.
+                            ++listNum;
+                            System.out.println(listNum + ". " + p.getName() + " $" + p.getPrice() + "-> Out Of Stock");
+                            menuWithListnumber.put(listNum, p);
+
+                        } else {
+                            ++listNum;
+                            System.out.println(listNum + ". " + p.getName() + " $" + p.getPrice());
+                            menuWithListnumber.put(listNum, p);
+                            quantityForstock += p.getQuantity();
+                        }
                     }
                 }
+
+                //display option for 'back to menu'
+                System.out.println(listNum + 1 + "." + " Back to menu");
+
+                //if there is no food
+                if (listNum == 0) {
+                    System.out.println("No available Product to order currently");
+                    chooseMenu(); // go back to order menu
+
+                    // all menu out of stock
+                } else if (quantityForstock == 0) {
+                    System.out.println("All Products are out of stock");
+                    chooseMenu(); // go back to order menu
+                }
+
                 chooseproduct = scanner.nextInt();
+
+                //go back to menu
+                if (chooseproduct == listNum + 1) {
+                    chooseMenu();
+                }
+
                 do{
                     System.out.println("How many? (the quantity left : " + menuWithListnumber.get(chooseproduct).getQuantity() +" )");
                     chooseQuantity = scanner.nextInt();
@@ -749,14 +826,18 @@ import static starbucks.menu.products;
                     }
                 }
                 while(SelectAgain); // if the chosen quantity greater than quantity in stock
-                                    // choose it again
+                // choose it again
 
                 // update the quantity
                 updateTheQuantity =  menuWithListnumber.get(chooseproduct).getQuantity();
                 menuWithListnumber.get(chooseproduct).setQuantity(updateTheQuantity-1);
                 o.addOrder(menuWithListnumber.get(chooseproduct),chooseQuantity);
+
+                System.out.printf("\nThe order summary :\n");
+                orderlist();
                 System.out.printf("\nThe total price : $%.2f\n", o.calculateTotalPrice());
                 break;
+
             case 4 :
                 //no item in the list
                 if(o.orderList==null){
@@ -800,7 +881,7 @@ import static starbucks.menu.products;
                                         System.out.println("This item is out of stock");
                                     }
 
-                                    System.out.println("Type the quantity you want to remove: ");
+                                    System.out.println("Type the quantity you want : ");
                                     int removeQuantity = scanner.nextInt();
                                     //remove the item...
 
@@ -812,23 +893,23 @@ import static starbucks.menu.products;
                                     }else if(removeQuantity >0 && removeQuantity <= quantity ){
                                         o.orderList.remove(Order);
                                         for(Product p : products ){
-                                            if(p.getName().equals(Name) && Size.equals("s") ){
+                                            if(p.getName().equals(Name) && Size.equals("s") && p instanceof Drink ){
                                                 o.addOrderDrink(p,removeQuantity,1);
                                             }
 
-                                            else if(p.getName().equals(Name) && Size.equals("t")){
+                                            else if(p.getName().equals(Name) && Size.equals("t") &&  p instanceof Drink ){
                                                 o.addOrderDrink(p,removeQuantity,2);
                                             }
 
-                                            else if(p.getName().equals(Name) && Size.equals("g")){
+                                            else if(p.getName().equals(Name) && Size.equals("g") &&  p instanceof Drink ){
                                                 o.addOrderDrink(p,removeQuantity,3);
                                             }
 
-                                            else if(p.getName().equals(Name) && Size.equals("v")){
+                                            else if(p.getName().equals(Name) && Size.equals("v") &&  p instanceof Drink ){
                                                 o.addOrderDrink(p,removeQuantity,4);
                                             }
 
-                                            else{
+                                            else if(p.getName().equals(Order)){
                                                 o.addOrder(p,removeQuantity);
                                             }
                                         }
@@ -844,6 +925,9 @@ import static starbucks.menu.products;
 
                     } while (selectAgain);
 
+                }
+                if(o.orderList.size()==0){
+                    System.out.printf("No items in the order list");
                 }
                 System.out.printf("\nThe order summary :\n");
                 orderlist();

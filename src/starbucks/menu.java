@@ -134,9 +134,9 @@ public class menu {
                     fileWriter.write(" ");
                     fileWriter.write(p.getName());
                     fileWriter.write(" ");
-                    fileWriter.write(String.valueOf(((Drink) p).getQuantity()));
+                    fileWriter.write(String.valueOf(((Food) p).getQuantity()));
                     fileWriter.write(" ");
-                    fileWriter.write(Double.toString(((Drink) p).getPrice()));
+                    fileWriter.write(Double.toString(((Food) p).getPrice()));
                     fileWriter.write("\n");
 
                 }else{ //merchandise
@@ -145,9 +145,9 @@ public class menu {
                     fileWriter.write(" ");
                     fileWriter.write(p.getName());
                     fileWriter.write(" ");
-                    fileWriter.write(String.valueOf(((Drink) p).getQuantity()));
+                    fileWriter.write(String.valueOf(((Merchandise) p).getQuantity()));
                     fileWriter.write(" ");
-                    fileWriter.write(Double.toString(((Drink) p).getPrice()));
+                    fileWriter.write(Double.toString(((Merchandise) p).getPrice()));
                     fileWriter.write("\n");
 
                 }
